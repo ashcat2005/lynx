@@ -28,7 +28,7 @@ arcsec_in_au = 8000 # 1 arcsec in au
 
 
 # Read the initial data
-initial_data_file = "data/GalacticCenter.dat"
+initial_data_file = "N_Body_Problem/data/GalacticCenter.dat"
 (x1,y1,z1,vx1,vy1,vz1,mass) = loadtxt(initial_data_file, unpack = True)
 
 # Convert from SI units to (years, AU, Solar_Mass) units
@@ -79,7 +79,7 @@ dt = (t_f - t_0)/n
 # --------------------------------------------------------------------------- #
 # 1. RK4 method
 # 2. Velocity Verlet method
-# 3. Logarithm Hamiltonian regularization method
+# 3. Logarithm Hamiltonian regularization method (Not yet)
 # --------------------------------------------------------------------------- #
 
 intgrtr = 1
@@ -94,7 +94,7 @@ match intgrtr:
     case 2:
         # Integration of the equations of motion using the velocity Verlet method
         q = velVerlet(S.EoM, q0, t_0, t_f, dt)
-        integrator = 'Velocity verlet'
+        integrator = 'Velocity Verlet'
     case 'logHreg':
         # Integration of the equations of motion using the logarithm Hamiltonian method
         q = logHreg(S.EoM, S.PotentialEnergy, q0, t_0, t_f, dt)

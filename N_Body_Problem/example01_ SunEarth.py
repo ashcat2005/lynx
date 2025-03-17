@@ -27,7 +27,7 @@ au_in_meters = 1.49598261e11 # 1 au in meters
 year_in_seconds = 3600*24*365 # 1 year in seconds
 
 # Read the initial data
-initial_data_file = "data/sun_earth.dat"
+initial_data_file = "N_Body_Problem/data/sun_earth.dat"
 (x,y,z,vx,vy,vz,mass) = loadtxt(initial_data_file, unpack = True)
 
 # Convert from SI units to (years, AU, Solar_Mass) units
@@ -68,10 +68,10 @@ dt = (t_f - t_0)/n
 # --------------------------------------------------------------------------- #
 # 1. RK4 method
 # 2. Velocity Verlet method
-# 3. Logarithm Hamiltonian regularization method
+# 3. Logarithm Hamiltonian regularization method (Not yet)
 # --------------------------------------------------------------------------- #
 
-intgrtr = 2
+intgrtr = 1
 
 start = time.time()
 
@@ -83,7 +83,7 @@ match intgrtr:
     case 2:
         # Integration of the equations of motion using the velocity Verlet method
         q = velVerlet(S.EoM, q0, t_0, t_f, dt)
-        integrator = 'Velocity verlet'
+        integrator = 'Velocity Verlet'
     case 'logHreg':
         # Integration of the equations of motion using the logarithm Hamiltonian method
         q = logHreg(S.EoM, S.PotentialEnergy, q0, t_0, t_f, dt)
