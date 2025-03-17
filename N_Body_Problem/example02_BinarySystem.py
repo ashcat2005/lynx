@@ -7,7 +7,7 @@ Few-Bodies Gravitational System Sumilation
 ===============================================================================
 """
 
-from numpy import loadtxt, pi, array, any
+from numpy import loadtxt, pi, array
 import time
 from common.gravSystem import System
 from common.plots import *
@@ -102,6 +102,8 @@ for i in range(n):
     T[i] = S.KineticEnergy(q[i,:,:])
     U[i] = S.PotentialEnergy(q[i,:,:])
 
+print('\nEl cambio en la energía total a lo largo de la integración fue de:')
+print((T[0]+U[0]) - (T[-1] + U[-1]), '\n\n')
 
 # Plot the orbits
 plot3D(q, names, integrator = integrator)
