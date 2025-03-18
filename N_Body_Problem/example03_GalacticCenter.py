@@ -65,10 +65,10 @@ q0 = array([x,y,z,vx,vy,vz]).T
 
 # Creation of the time grid (in years)
 t_0 = 0.
-t_f = 50.
+t_f = 100.
 
 # Number of steps in the grid
-n = 400000
+n = 700000
 
 # Constant stepsize defined by the number of steps in the grid
 dt = (t_f - t_0)/n
