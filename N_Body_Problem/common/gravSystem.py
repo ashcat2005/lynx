@@ -50,6 +50,40 @@ class System():
             q1[i,5] = -self.G * sum(Deltaxyz[:,2] * self.mass/(r**3))
         return q1
     
+    def EoM1(self, q0):
+        '''
+        ------------------------------------------
+        EoM(t0,q0) 
+        ------------------------------------------
+        Equations of Motion for N-particles 
+        
+        Arguments:
+        t0: time parameter (not necessary for 
+            the Newtonian problem)
+        q0: numpy array with the initial condition
+            data:
+            q0[0] = particle 1
+            q0[1] = particle 2
+            etc.
+            q0[0] = [x0, y0, z0, vx0, vy0, vz0]
+        mass: masses of the particles
+        ------------------------------------------
+        '''
+        q1 = zeros(q0.shape)
+        q1[:,0:3] = q0[:,3:] # Components of the velocity
+        
+        for i in range(self.N):
+            Deltaxyz = q0[i,0:3] - q0[:,0:3]
+            # Distance between particles
+            r = sqrt(sum(Deltaxyz*Deltaxyz, axis=1))
+            # To avoid divivision by zero in the self-force terms
+            # The terms vanish due to the Delta term in the numerator! 
+            r[i] = 1 
+            q1[i,3] = -self.G * sum(Deltaxyz[:,0] * self.mass/(r**3))
+            q1[i,4] = -self.G * sum(Deltaxyz[:,1] * self.mass/(r**3))
+            q1[i,5] = -self.G * sum(Deltaxyz[:,2] * self.mass/(r**3))
+        return q1
+    
     def KineticEnergy(self, q):
         '''
         Kinetic Energy 

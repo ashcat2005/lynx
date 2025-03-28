@@ -14,6 +14,7 @@ from common.plots import *
 from integrators.RK4 import RK4
 from integrators.velocityVerlet import velVerlet
 from integrators.logHreg import logHreg
+from integrators.adams import adams
 
 
 
@@ -56,10 +57,10 @@ q0 = array([x,y,z,vx,vy,vz]).T
 
 # Creation of the time grid (in years)
 t_0 = 0.
-t_f = 5.
+t_f = 2.
 
 # Number of steps in the grid
-n = 40000
+n = 500000
 
 # Constant stepsize defined by the number of steps in the grid
 dt = (t_f - t_0)/n
@@ -70,10 +71,11 @@ dt = (t_f - t_0)/n
 # --------------------------------------------------------------------------- #
 # 1. RK4 method
 # 2. Velocity Verlet method
-# 3. Logarithm Hamiltonian regularization method (Not yet)
+# 3. Adam's method
+# 4. Logarithm Hamiltonian regularization method (Not yet)
 # --------------------------------------------------------------------------- #
 
-intgrtr = 1
+intgrtr = 3
 
 start = time.time()
 
@@ -86,15 +88,17 @@ match intgrtr:
         # Integration of the equations of motion using the velocity Verlet method
         q = velVerlet(S.EoM, q0, t_0, t_f, dt)
         integrator = 'Velocity Verlet'
-    case 'logHreg':
-        # Integration of the equations of motion using the logarithm Hamiltonian method
-        q = logHreg(S.EoM, S.PotentialEnergy, q0, t_0, t_f, dt)
-        integrator = 'logHreg'
+    case 3:
+        # Integration of the equations of motion using the Adam's method
+        q = adams(S.EoM, q0, t_0, t_f, dt)
+        integrator = 'Adam\'s method'
 
 
 end = time.time()
 print('\nEl tiempo de computo con el uso de ', integrator,' fue:', end - start, '\n\n')
 
+n = len(q)
+print(n)
 # Energy of the system
 T = zeros(n)
 U = zeros(n)
