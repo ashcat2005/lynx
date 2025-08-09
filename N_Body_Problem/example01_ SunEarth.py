@@ -15,6 +15,7 @@ from integrators.RK4 import RK4
 from integrators.velocityVerlet import velVerlet
 from integrators.adams import adams
 from integrators.logHreg import logHreg
+from integrators.BS import bulStoer, integrate
 
 
 
@@ -70,8 +71,9 @@ dt = (t_f - t_0)/n
 # --------------------------------------------------------------------------- #
 # 1. RK4 method
 # 2. Velocity Verlet method
-# 3. Adam's method
-# 4. Logarithm Hamiltonian regularization method (Not yet)
+# 3. Bulirsch-Stoer method
+# 4. Adam's method
+# 5. Logarithm Hamiltonian regularization method (Not yet)
 # --------------------------------------------------------------------------- #
 
 intgrtr = 3
@@ -88,6 +90,10 @@ match intgrtr:
         q = velVerlet(S.EoM, q0, t_0, t_f, dt)
         integrator = 'Velocity Verlet'
     case 3:
+        # Integration of the equations of motion using the Bulirsch-Stoer method
+        _, q = bulStoer(S.EoM, q0, t_0, t_f, H=0.01, tol=1e-11)
+        integrator = 'BS method'
+    case 4:
         # Integration of the equations of motion using the Adam's method
         q = adams(S.EoM, q0, t_0, t_f, dt)
         integrator = 'Adam\'s method'
